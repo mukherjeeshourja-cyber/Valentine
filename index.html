@@ -10,8 +10,8 @@
 
   <style>
     :root {
-      --bg1: #ffd6e7;
-      --bg2: #ffeef6;
+      --bg1: #ff9ecf;
+      --bg2: #ffd1e8;
       --card: #ffffffcc;
       --yes: #ff3b7a;
       --yesHover: #ff1f68;
@@ -20,15 +20,17 @@
     * { box-sizing: border-box; }
 
     body {
-      margin: 0;
-      min-height: 100svh;
-      display: grid;
-      place-items: center;
-      background: radial-gradient(circle at top, var(--bg2), var(--bg1));
-      font-family: system-ui, sans-serif;
-      overflow: hidden;
-      padding: 16px;
-    }
+  margin: 0;
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top, var(--bg2), var(--bg1));
+  font-family: system-ui, sans-serif;
+  overflow-x: hidden;
+  padding: 0;
+}
 
     /* FULL-SCREEN CONFETTI CANVAS */
     #confettiCanvas {
@@ -126,6 +128,28 @@
       from { transform: scale(.96); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
     }
+    .fade-up {
+  animation: fadeUp 0.6s ease forwards;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(255,255,255,.4), transparent 40%),
+              radial-gradient(circle at 80% 80%, rgba(255,255,255,.3), transparent 40%);
+  pointer-events: none;
+}
   </style>
 </head>
 
@@ -170,8 +194,12 @@
                C198 148 194 144 190 144Z"
             fill="#ff7aa2"/>
     </svg>
-<p> I’ve been thinking about this for a while… </p>
-    <h1>Siddhita will you be my Valentine?</h1>
+
+    <div id="introText">
+  <p>I’ve been thinking about this for a while…</p>
+  <h1>Siddhita will you be my Valentine?</h1>
+</div>
+
 
     <section class="button-zone" id="zone">
       <button id="yesBtn">Yes</button>
@@ -182,13 +210,19 @@
     <div class="hint" id="hint">“No” seems a bit shy 😈</div>
 
     <section class="result" id="result">
-      <h2>YAY! 🎉</h2>
-      <img
-        class="fireworks"
-        src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"
-        alt="Fireworks"
-      />
-    </section>
+  <h2>YAY! 🎉</h2>
+
+  <img
+    class="fireworks"
+    src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"
+    alt="Fireworks"
+  />
+
+  <p style="margin-top:12px;font-size:18px;">
+    This isn’t a joke.  
+    It’s just me choosing you — every time.
+  </p>
+</section>
   </main>
 
   <script>
@@ -197,14 +231,6 @@
     const noBtn = document.getElementById("noBtn");
     const result = document.getElementById("result");
     const hint = document.getElementById("hint");
-    let noEscapeCount = 0;
-    const hintMessages = [
-  "No? That button seems a little nervous.",
-  "Still trying to say no? Interesting choice.",
-  "At this point, you’re just teasing me.",
-  "Okay… I think we both know the answer now."
-];
-
 
     /* ---------- CONFETTI ---------- */
     const confettiCanvas = document.getElementById("confettiCanvas");
@@ -264,31 +290,24 @@
     }
 
     function moveNo(px, py) {
-      noEscapeCount++;
+  noEscapeCount++;
 
-const index = Math.min(noEscapeCount - 1, hintMessages.length - 1);
-hint.textContent = hintMessages[index];
-      const z = zone.getBoundingClientRect();
-      const b = noBtn.getBoundingClientRect();
+  const index = Math.min(noEscapeCount - 1, hintMessages.length - 1);
+  hint.textContent = hintMessages[index];
 
-      let dx = (b.left + b.width / 2) - px;
-      let dy = (b.top + b.height / 2) - py;
-      let mag = Math.hypot(dx, dy) || 1;
-      dx /= mag;
-      dy /= mag;
+  const z = zone.getBoundingClientRect();
+  const b = noBtn.getBoundingClientRect();
 
-      let newLeft = (b.left - z.left) + dx * 150;
-      let newTop  = (b.top - z.top) + dy * 150;
+  const padding = 20;
 
-      newLeft = clamp(newLeft, 0, z.width - b.width);
-      newTop  = clamp(newTop, 0, z.height - b.height);
+  const newLeft = Math.random() * (z.width - b.width - padding * 2) + padding;
+  const newTop  = Math.random() * (z.height - b.height - padding * 2) + padding;
 
-      noBtn.style.left = newLeft + "px";
-      noBtn.style.top = newTop + "px";
-      noBtn.style.transform = "none";
+  noBtn.style.left = newLeft + "px";
+  noBtn.style.top = newTop + "px";
+  noBtn.style.transform = "scale(0.95)";
+}
 
-      growYes();
-    }
 
     zone.addEventListener("pointermove", e => {
       const b = noBtn.getBoundingClientRect();
@@ -303,6 +322,7 @@ hint.textContent = hintMessages[index];
 
     /* ---------- YES CLICK ---------- */
     yesBtn.addEventListener("click", () => {
+    document.getElementById("introText").style.display = "none";
       zone.style.display = "none";
       hint.style.display = "none";     // HIDE THE HINT
       result.style.display = "block";
@@ -312,6 +332,5 @@ hint.textContent = hintMessages[index];
   </script>
 </body>
 </html>
-
 
 
