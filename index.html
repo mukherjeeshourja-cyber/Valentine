@@ -170,7 +170,7 @@
                C198 148 194 144 190 144Z"
             fill="#ff7aa2"/>
     </svg>
-
+<p> I’ve been thinking about this for a while… </p>
     <h1>Siddhita will you be my Valentine?</h1>
 
     <section class="button-zone" id="zone">
@@ -197,6 +197,14 @@
     const noBtn = document.getElementById("noBtn");
     const result = document.getElementById("result");
     const hint = document.getElementById("hint");
+    let noEscapeCount = 0;
+    const hintMessages = [
+  "No? That button seems a little nervous.",
+  "Still trying to say no? Interesting choice.",
+  "At this point, you’re just teasing me.",
+  "Okay… I think we both know the answer now."
+];
+
 
     /* ---------- CONFETTI ---------- */
     const confettiCanvas = document.getElementById("confettiCanvas");
@@ -256,6 +264,10 @@
     }
 
     function moveNo(px, py) {
+      noEscapeCount++;
+
+const index = Math.min(noEscapeCount - 1, hintMessages.length - 1);
+hint.textContent = hintMessages[index];
       const z = zone.getBoundingClientRect();
       const b = noBtn.getBoundingClientRect();
 
@@ -300,5 +312,6 @@
   </script>
 </body>
 </html>
+
 
 
