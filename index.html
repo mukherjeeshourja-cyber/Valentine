@@ -142,13 +142,26 @@
     transform: translateY(0);
   }
 }
-body::before {
+body::after {
   content: "";
   position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at 20% 20%, rgba(255,255,255,.4), transparent 40%),
-              radial-gradient(circle at 80% 80%, rgba(255,255,255,.3), transparent 40%);
+  inset: -20%;
+  background: radial-gradient(circle at center,
+    rgba(255, 120, 170, 0.25),
+    transparent 60%);
+  filter: blur(80px);
+  animation: softGlow 12s ease-in-out infinite alternate;
   pointer-events: none;
+}
+    @keyframes softGlow {
+  0% {
+    transform: scale(1) translateY(0);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.1) translateY(-20px);
+    opacity: 0.85;
+  }
 }
   </style>
 </head>
@@ -221,6 +234,8 @@ body::before {
   <p style="margin-top:12px;font-size:18px;">
     This isn’t a joke.  
     It’s just me choosing you — every time.
+    I didn’t build this to be clever.  
+    I built it because it’s you.
   </p>
 </section>
   </main>
@@ -341,6 +356,7 @@ const hintMessages = [
   </script>
 </body>
 </html>
+
 
 
 
