@@ -209,12 +209,12 @@ body::before {
     <!-- HINT -->
     <div class="hint" id="hint">“No” seems a bit shy 😈</div>
 
-    <section class="result" id="result">
+    <section class="result fade-up" id="result">
   <h2>YAY! 🎉</h2>
 
   <img
     class="fireworks"
-    src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"
+    src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif"
     alt="Fireworks"
   />
 
@@ -231,6 +231,15 @@ body::before {
     const noBtn = document.getElementById("noBtn");
     const result = document.getElementById("result");
     const hint = document.getElementById("hint");
+    let noEscapeCount = 0;
+
+const hintMessages = [
+  "No? That button looks nervous.",
+  "You’re still trying? Cute.",
+  "Okay… you’re definitely teasing now.",
+  "Let’s be honest — you already chose."
+];
+
 
     /* ---------- CONFETTI ---------- */
     const confettiCanvas = document.getElementById("confettiCanvas");
@@ -332,5 +341,6 @@ body::before {
   </script>
 </body>
 </html>
+
 
 
